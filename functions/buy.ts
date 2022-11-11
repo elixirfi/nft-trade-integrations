@@ -4,39 +4,37 @@ import {
     LAMPORTS_PER_SOL,
     PublicKey,
     SYSVAR_CLOCK_PUBKEY,
+    Transaction,
     TransactionInstruction,
     TransactionMessage,
     VersionedTransaction
 } from "@solana/web3.js";
+import { Compose, Vault } from "../program";
 
 import {
-    MPL_TOKEN_METADATA_ID,
     PROGRAM_IDS,
-    TREASURY,
     composeProgram,
     getExtraComputeTxn,
     getLookupTable,
-    getProgramsLookupTable
-} from "..";
-import { NftMetadata, getAssetName } from "../../common";
-import { TransactionsAndSteps, createFailResult } from "../../util";
-import { FEE_PID, feeProgram } from "../fee";
-import { createAppraisal } from "../indexes";
-import { AnchorState } from "../types";
+    getProgramsLookupTable,
+    AnchorState,
+    NftMetadata,
+    TransactionResult
+} from "../utils";
+import { createAppraisal } from "./createAppraisal";
 
 export const elixirBuy = async (
-    anchorState: AnchorState,
+    anchorState: AnchorState<Vault>,
     fnftMint: PublicKey,
     nftMint: PublicKey,
     poolMint: PublicKey,
-    metadata: NftMetadata,
     lookupTableAddresses: Array<PublicKey>,
     lookupTable: PublicKey,
     numFractions: number,
     doSwap: boolean,
     maxSolToSpend?: number
-): Promise<TransactionsAndSteps> => {
-    if (!anchorState.wallet) return createFailResult("No connected wallet");
+): Promise<TransactionResult> => {
+    if (!anchorState.wallet) return { error: "No wallet connected", status: false };
 
     const [poolAccount] = await PublicKey.findProgramAddress(
         [Buffer.from(utils.bytes.utf8.encode("fractions")), poolMint.toBytes()],
@@ -62,12 +60,12 @@ export const elixirBuy = async (
 
     const [feeAccount] = PublicKey.findProgramAddressSync(
         [Buffer.from(utils.bytes.utf8.encode("fee")), poolMint.toBytes(), lookupTableAddresses[2].toBytes()],
-        FEE_PID
+        PROGRAM_IDS.fee
     );
 
-    const compose = composeProgram(anchorState);
-
-    const transactions = [];
+    const compose = composeProgram(anchorState.provider.connection);
+    
+    const transactions: Transaction[] = [];
     const appraiseTxn = await createAppraisal(
         anchorState,
         poolMint,
@@ -79,68 +77,49 @@ export const elixirBuy = async (
     );
     if (appraiseTxn) transactions.push(appraiseTxn);
 
-    const fee = feeProgram(anchorState);
-    await fee.account.fee
-        .fetch(feeAccount)
-        .then(() => {
-            // do nothing
-        })
-        .catch(async () => {
-            instructions.push(
-                await fee.methods
-                    .initFee(new PublicKey(poolMint), lookupTableAddresses[2])
-                    .accounts({
-                        initializer: anchorState.wallet!.publicKey,
-                        fee: feeAccount,
-                        systemProgram: PROGRAM_IDS.system
-                    })
-                    .instruction()
-            );
-        });
-
-    const initializerSolTa = await getATAAddressSync({
+    const initializerSolTa = getATAAddressSync({
         mint: new PublicKey(PROGRAM_IDS.wrapped_sol),
         owner: anchorState.wallet.publicKey
     });
 
-    const initializerNftTa = await getATAAddressSync({
+    const initializerNftTa = getATAAddressSync({
         mint: nftMint,
         owner: anchorState.wallet.publicKey
     });
 
-    const initializerFractionsTa = await getATAAddressSync({
+    const initializerFractionsTa = getATAAddressSync({
         mint: fnftMint,
         owner: anchorState.wallet.publicKey
     });
 
-    const initializerPoolTa = await getATAAddressSync({
+    const initializerPoolTa = getATAAddressSync({
         mint: poolMint,
         owner: anchorState.wallet.publicKey
     });
 
-    const vaultProgramNftTa = await getATAAddressSync({
+    const vaultProgramNftTa = getATAAddressSync({
         mint: nftMint,
         owner: vaultAccount
     });
 
-    const vaultProgramFractionsTa = await getATAAddressSync({
+    const vaultProgramFractionsTa = getATAAddressSync({
         mint: fnftMint,
         owner: poolAccount
     });
 
-    const composeFeeSolTa = await getATAAddressSync({
+    const composeFeeSolTa = getATAAddressSync({
         mint: new PublicKey(PROGRAM_IDS.wrapped_sol),
         owner: feeAccount
     });
 
     const treasurySolFeeTa = getATAAddressSync({
         mint: new PublicKey(PROGRAM_IDS.wrapped_sol),
-        owner: TREASURY
+        owner: PROGRAM_IDS.treasury
     });
 
     const treasuryPoolFeeTa = getATAAddressSync({
         mint: poolMint,
-        owner: TREASURY
+        owner: PROGRAM_IDS.treasury
     });
 
     const buyIx = await compose.methods
@@ -158,16 +137,16 @@ export const elixirBuy = async (
             initializerPoolTa,
             vaultProgramNftTa,
             vaultProgramFractionsTa,
-            treasury: TREASURY,
+            treasury: PROGRAM_IDS.treasury,
             treasuryPoolFeeTa,
             composeFeeMint: PROGRAM_IDS.wrapped_sol,
             composeFeeAccount: feeAccount,
             composeFeeSolTa,
             treasurySolFeeTa,
-            feeProgram: FEE_PID,
+            feeProgram: PROGRAM_IDS.fee,
             vaultProgram: PROGRAM_IDS.vault,
             ammProgram: PROGRAM_IDS.amm,
-            mplTokenMetadata: MPL_TOKEN_METADATA_ID,
+            mplTokenMetadata: PROGRAM_IDS.metadata,
             associatedTokenProgram: PROGRAM_IDS.associatedToken,
             tokenProgram: PROGRAM_IDS.token,
             systemProgram: PROGRAM_IDS.system,
@@ -267,5 +246,5 @@ export const elixirBuy = async (
     const transactionV0 = new VersionedTransaction(messageV0);
     transactions.push(transactionV0 as unknown as any);
 
-    return { transactions, steps: [`Appraising ${getAssetName(metadata)}`, `Buying ${getAssetName(metadata)}`] };
+    return { transactions, status: true };
 };

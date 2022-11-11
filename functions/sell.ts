@@ -9,33 +9,21 @@ import {
     TransactionMessage,
     VersionedTransaction
 } from "@solana/web3.js";
+import { Vault } from "../program";
+import { AnchorState, composeProgram, getExtraComputeTxn, getLookupTable, getMetadataKey, getProgramsLookupTable, PROGRAM_IDS, TransactionResult } from "../utils";
+import { createAppraisal } from "./createAppraisal";
 
-import {
-    MPL_TOKEN_METADATA_ID,
-    PROGRAM_IDS,
-    TREASURY,
-    composeProgram,
-    getExtraComputeTxn,
-    getLookupTable,
-    getProgramsLookupTable
-} from "..";
-import { NftMetadata, getAssetName, getMetadataKey } from "../../common";
-import { TransactionsAndSteps, createFailResult } from "../../util";
-import { FEE_PID } from "../fee";
-import { createAppraisal } from "../indexes";
-import { AnchorState } from "../types";
 
 export const elixirSell = async (
-    anchorState: AnchorState,
+    anchorState: AnchorState<Vault>,
     nftMint: PublicKey,
     poolMint: PublicKey,
-    metadata: NftMetadata,
     lookupTableAddresses: Array<PublicKey>,
     lookupTable: PublicKey,
     doSwap: boolean,
     minSolReceived?: number
-): Promise<TransactionsAndSteps> => {
-    if (!anchorState.wallet) return createFailResult("No connected wallet");
+): Promise<TransactionResult> => {
+    if (!anchorState.wallet) return { error: "No wallet connected", status: false };
 
     const nonceAccount = Keypair.generate();
     const nonce = nonceAccount.publicKey;
@@ -63,13 +51,13 @@ export const elixirSell = async (
     );
 
     const [nftMetadata] = PublicKey.findProgramAddressSync(
-        [Buffer.from(utils.bytes.utf8.encode("metadata")), MPL_TOKEN_METADATA_ID.toBytes(), nftMint.toBytes()],
-        MPL_TOKEN_METADATA_ID
+        [Buffer.from(utils.bytes.utf8.encode("metadata")), PROGRAM_IDS.metadata.toBytes(), nftMint.toBytes()],
+        PROGRAM_IDS.metadata
     );
 
     const [feeAccount] = PublicKey.findProgramAddressSync(
         [Buffer.from(utils.bytes.utf8.encode("fee")), poolMint.toBytes(), lookupTableAddresses[2].toBytes()],
-        FEE_PID
+        PROGRAM_IDS.fee
     );
 
     const metadataAccount = await getMetadataKey(fnftMint);
@@ -111,12 +99,12 @@ export const elixirSell = async (
 
     const treasurySolFeeTa = getATAAddressSync({
         mint: new PublicKey(PROGRAM_IDS.wrapped_sol),
-        owner: TREASURY
+        owner: PROGRAM_IDS.treasury
     });
 
     const treasuryPoolFeeTa = getATAAddressSync({
         mint: poolMint,
-        owner: TREASURY
+        owner: PROGRAM_IDS.treasury
     });
 
     const instructions: TransactionInstruction[] = [];
@@ -135,7 +123,7 @@ export const elixirSell = async (
 
     appraisalTxn && transactions.push(appraisalTxn);
 
-    const compose = composeProgram(anchorState);
+    const compose = composeProgram(anchorState.provider.connection);
 
     const sellIx = await compose.methods
         .sell(nonce, new BN(minSolReceived || 0), doSwap)
@@ -153,15 +141,15 @@ export const elixirSell = async (
             vaultProgramNftTa,
             vaultProgramFractionsTa,
             composeFeeMint: PROGRAM_IDS.wrapped_sol,
-            treasury: TREASURY,
+            treasury: PROGRAM_IDS.treasury,
             composeFeeAccount: feeAccount,
             composeFeeSolTa,
             treasurySolFeeTa,
             treasuryPoolFeeTa,
-            feeProgram: FEE_PID,
+            feeProgram: PROGRAM_IDS.fee,
             vaultProgram: PROGRAM_IDS.vault,
             ammProgram: PROGRAM_IDS.amm,
-            mplTokenMetadata: MPL_TOKEN_METADATA_ID,
+            mplTokenMetadata: PROGRAM_IDS.metadata,
             associatedTokenProgram: PROGRAM_IDS.associatedToken,
             tokenProgram: PROGRAM_IDS.token,
             systemProgram: PROGRAM_IDS.system,
@@ -274,6 +262,6 @@ export const elixirSell = async (
 
     return {
         transactions,
-        steps: [`Appraising ${getAssetName(metadata)}`, `Selling ${getAssetName(metadata)}`]
+        status: true
     };
 };

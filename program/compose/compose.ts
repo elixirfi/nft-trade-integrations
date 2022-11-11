@@ -313,7 +313,7 @@ export type Compose = {
   ]
 };
 
-export const IDL: Compose = {
+export const COMPOSE_IDL: Compose = {
   "version": "0.1.0",
   "name": "compose",
   "instructions": [
