@@ -23,6 +23,18 @@ import {
 } from "../utils";
 import { createAppraisal } from "./createAppraisal";
 
+// anchorState -- See type
+// fnftMint -- Mint of the fraction you're buying
+// nftMint -- Mint of the NFT you're buying
+// poolMint -- Mint of the pool you're buying from
+// lookupTable -- The pool specific lookup table address
+// lookupTableAddresses -- The contents of the lookup table
+// numFractions -- The number of fractions of the underlying fnftMint you need to buy
+// doSwap -- If you want to include a swap txn at the begining or just use existing funds
+// maxSolToSpend -- The maximum SOL you're willing to spend to buy the NFT
+/// NFT --> Whole/Normal NFT [Okay Bear #9622]
+/// FNFT --> Fracitonalized Individual NFTs [Token Okay Bear #9622]
+/// PNFT --> Pooled NFTs (Collection based) [Token Okay Bears Floor Index]
 export const elixirBuy = async (
     anchorState: AnchorState<Vault>,
     fnftMint: PublicKey,

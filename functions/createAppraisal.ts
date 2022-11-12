@@ -2,6 +2,13 @@ import { PublicKey, SYSVAR_CLOCK_PUBKEY, SystemProgram, Transaction } from "@sol
 import { AnchorState, BRIDGESPLIT_API, May } from "../utils";
 import { Vault } from "../program";
 
+// anchorState -- See type
+// nftMint -- Mint of the NFT you're buying
+// poolMint -- Mint of the pool you're buying from
+// externalAccount -- PDA from Vault program with seeds "fractions-seed" and poolMint
+// poolAccount -- PDA from Vault program with seeds "fractions" and poolMint
+// appraisalAccount -- PDA from Vault program with seeds "appraisal" nftMint and poolMint
+// send -- whether to return the transaction or send it
 export async function createAppraisal(
     anchorState: AnchorState<Vault>,
     poolMint: PublicKey,

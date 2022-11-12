@@ -13,7 +13,14 @@ import { Vault } from "../program";
 import { AnchorState, composeProgram, getExtraComputeTxn, getLookupTable, getMetadataKey, getProgramsLookupTable, PROGRAM_IDS, TransactionResult } from "../utils";
 import { createAppraisal } from "./createAppraisal";
 
-
+// anchorState -- See type
+// nftMint -- Mint of the NFT you're buying
+// poolMint -- Mint of the pool you're selling into
+// lookupTable -- The pool specific lookup table address
+// lookupTableAddresses -- The contents of the lookup table
+// numFractions -- The number of fractions of the underlying fnftMint you need to buy
+// doSwap -- If you want to include a swap txn at the begining or just use existing funds
+// minSolReceived -- The minimum SOL you're willing to receive selling the NFT
 export const elixirSell = async (
     anchorState: AnchorState<Vault>,
     nftMint: PublicKey,

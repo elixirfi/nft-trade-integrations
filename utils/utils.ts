@@ -9,10 +9,11 @@ import {
     SYSVAR_RENT_PUBKEY
 } from "@solana/web3.js";
 
-import { METADATA_PREFIX, PROGRAM_IDS } from "./constants";
+import { BRIDGESPLIT_API, METADATA_PREFIX, PROGRAM_IDS } from "./constants";
 import { Compose, Vault } from "../program";
 import composeIdl from "../program/compose/compose.json";
 import vaultIdl from "../program/vault/vault.json";
+import axios from "axios";
 
 export function getAssetName(metadata?: NftMetadata): string {
     let name = metadata?.data.name.replace(/\0/g, "");
@@ -39,6 +40,13 @@ export const getExtraComputeTxn = (compute: number) => {
     });
     return [modifyComputeUnits, addPriorityFee];
 };
+
+export const getLookupTableForMint = async (mint: string) => {
+    const subroute = `token/lookup_table/${mint}`;
+    const res = await axios.get(BRIDGESPLIT_API + subroute);
+
+    return res;
+}
 
 export const getProgramsLookupTable = () => {
     return getLookupTable(
