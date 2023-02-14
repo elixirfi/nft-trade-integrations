@@ -105,6 +105,177 @@ export type Vault = {
             ];
         },
         {
+            name: "fractionalizePnft";
+            accounts: [
+                {
+                    name: "payerAccount";
+                    isMut: true;
+                    isSigner: true;
+                },
+                {
+                    name: "initializerAccount";
+                    isMut: true;
+                    isSigner: true;
+                },
+                {
+                    name: "fractionsMint";
+                    isMut: true;
+                    isSigner: false;
+                },
+                {
+                    name: "fractionsTokenAccount";
+                    isMut: true;
+                    isSigner: false;
+                },
+                {
+                    name: "nftMint";
+                    isMut: true;
+                    isSigner: false;
+                },
+                {
+                    name: "initializerNftAccount";
+                    isMut: true;
+                    isSigner: false;
+                },
+                {
+                    name: "programNftAccount";
+                    isMut: true;
+                    isSigner: false;
+                },
+                {
+                    name: "vaultAccount";
+                    isMut: true;
+                    isSigner: false;
+                },
+                {
+                    name: "nftMetadata";
+                    isMut: true;
+                    isSigner: false;
+                },
+                {
+                    name: "nftEdition";
+                    isMut: true;
+                    isSigner: false;
+                },
+                {
+                    name: "associatedTokenProgram";
+                    isMut: false;
+                    isSigner: false;
+                },
+                {
+                    name: "tokenProgram";
+                    isMut: false;
+                    isSigner: false;
+                },
+                {
+                    name: "systemProgram";
+                    isMut: false;
+                    isSigner: false;
+                },
+                {
+                    name: "mplTokenMetadata";
+                    isMut: false;
+                    isSigner: false;
+                },
+                {
+                    name: "rent";
+                    isMut: false;
+                    isSigner: false;
+                },
+                {
+                    name: "instructionsProgram";
+                    isMut: false;
+                    isSigner: false;
+                }
+            ];
+            args: [
+                {
+                    name: "nonce";
+                    type: "publicKey";
+                },
+                {
+                    name: "numShares";
+                    type: "u64";
+                }
+            ];
+        },
+        {
+            name: "transferPnft";
+            accounts: [
+                {
+                    name: "payerAccount";
+                    isMut: true;
+                    isSigner: true;
+                },
+                {
+                    name: "initializerAccount";
+                    isMut: true;
+                    isSigner: true;
+                },
+                {
+                    name: "nftMint";
+                    isMut: true;
+                    isSigner: false;
+                },
+                {
+                    name: "initializerNftAccount";
+                    isMut: true;
+                    isSigner: false;
+                },
+                {
+                    name: "programNftAccount";
+                    isMut: true;
+                    isSigner: false;
+                },
+                {
+                    name: "poolAccount";
+                    isMut: false;
+                    isSigner: false;
+                },
+                {
+                    name: "nftMetadata";
+                    isMut: true;
+                    isSigner: false;
+                },
+                {
+                    name: "nftEdition";
+                    isMut: true;
+                    isSigner: false;
+                },
+                {
+                    name: "associatedTokenProgram";
+                    isMut: false;
+                    isSigner: false;
+                },
+                {
+                    name: "tokenProgram";
+                    isMut: false;
+                    isSigner: false;
+                },
+                {
+                    name: "systemProgram";
+                    isMut: false;
+                    isSigner: false;
+                },
+                {
+                    name: "mplTokenMetadata";
+                    isMut: false;
+                    isSigner: false;
+                },
+                {
+                    name: "rent";
+                    isMut: false;
+                    isSigner: false;
+                },
+                {
+                    name: "instructionsProgram";
+                    isMut: false;
+                    isSigner: false;
+                }
+            ];
+            args: [];
+        },
+        {
             name: "createTokenMetadataSingleAsset";
             accounts: [
                 {
@@ -244,7 +415,7 @@ export type Vault = {
             args: [];
         },
         {
-            name: "startAuction";
+            name: "fusePnft";
             accounts: [
                 {
                     name: "initializerAccount";
@@ -257,12 +428,22 @@ export type Vault = {
                     isSigner: false;
                 },
                 {
-                    name: "initializerTokenAccount";
+                    name: "nftMint";
                     isMut: true;
                     isSigner: false;
                 },
                 {
-                    name: "programTokenAccount";
+                    name: "fractionsTokenAccount";
+                    isMut: true;
+                    isSigner: false;
+                },
+                {
+                    name: "lockedNftAccount";
+                    isMut: true;
+                    isSigner: false;
+                },
+                {
+                    name: "userNftAccount";
                     isMut: true;
                     isSigner: false;
                 },
@@ -272,7 +453,22 @@ export type Vault = {
                     isSigner: false;
                 },
                 {
+                    name: "nftMetadata";
+                    isMut: true;
+                    isSigner: false;
+                },
+                {
+                    name: "nftEdition";
+                    isMut: true;
+                    isSigner: false;
+                },
+                {
                     name: "tokenProgram";
+                    isMut: false;
+                    isSigner: false;
+                },
+                {
+                    name: "associatedTokenProgram";
                     isMut: false;
                     isSigner: false;
                 },
@@ -282,206 +478,17 @@ export type Vault = {
                     isSigner: false;
                 },
                 {
-                    name: "clock";
-                    isMut: false;
-                    isSigner: false;
-                }
-            ];
-            args: [
-                {
-                    name: "bidInSol";
-                    type: "u64";
-                },
-                {
-                    name: "bidInFnfts";
-                    type: "u64";
-                },
-                {
-                    name: "minBid";
-                    type: "u64";
-                }
-            ];
-        },
-        {
-            name: "placeBid";
-            accounts: [
-                {
-                    name: "bidderAccount";
-                    isMut: true;
-                    isSigner: true;
-                },
-                {
-                    name: "previousBidderAccount";
-                    isMut: true;
-                    isSigner: false;
-                },
-                {
-                    name: "previousBidderTokenAccount";
-                    isMut: true;
-                    isSigner: false;
-                },
-                {
-                    name: "fractionsMint";
-                    isMut: true;
-                    isSigner: false;
-                },
-                {
-                    name: "bidderTokenAccount";
-                    isMut: true;
-                    isSigner: false;
-                },
-                {
-                    name: "programTokenAccount";
-                    isMut: true;
-                    isSigner: false;
-                },
-                {
-                    name: "vaultAccount";
-                    isMut: true;
-                    isSigner: false;
-                },
-                {
-                    name: "systemProgram";
+                    name: "instructionsProgram";
                     isMut: false;
                     isSigner: false;
                 },
                 {
-                    name: "tokenProgram";
-                    isMut: false;
-                    isSigner: false;
-                },
-                {
-                    name: "clock";
-                    isMut: false;
-                    isSigner: false;
-                }
-            ];
-            args: [
-                {
-                    name: "totalSol";
-                    type: "u64";
-                },
-                {
-                    name: "bidInSol";
-                    type: "u64";
-                },
-                {
-                    name: "bidInFnfts";
-                    type: "u64";
-                }
-            ];
-        },
-        {
-            name: "endAuction";
-            accounts: [
-                {
-                    name: "initializerAccount";
-                    isMut: true;
-                    isSigner: true;
-                },
-                {
-                    name: "treasuryAccount";
-                    isMut: true;
-                    isSigner: false;
-                },
-                {
-                    name: "winningBidderAccount";
-                    isMut: true;
-                    isSigner: false;
-                },
-                {
-                    name: "winningBidderTokenAccount";
-                    isMut: true;
-                    isSigner: false;
-                },
-                {
-                    name: "fractionsMint";
-                    isMut: true;
-                    isSigner: false;
-                },
-                {
-                    name: "programTokenAccount";
-                    isMut: true;
-                    isSigner: false;
-                },
-                {
-                    name: "vaultAccount";
-                    isMut: true;
-                    isSigner: false;
-                },
-                {
-                    name: "vaultNftAccount";
-                    isMut: true;
-                    isSigner: false;
-                },
-                {
-                    name: "winnerNftAccount";
-                    isMut: true;
-                    isSigner: false;
-                },
-                {
-                    name: "nftMetadataAccount";
-                    isMut: false;
-                    isSigner: false;
-                },
-                {
-                    name: "tokenProgram";
-                    isMut: false;
-                    isSigner: false;
-                },
-                {
-                    name: "clock";
+                    name: "mplTokenMetadata";
                     isMut: false;
                     isSigner: false;
                 }
             ];
             args: [];
-        },
-        {
-            name: "redeem";
-            accounts: [
-                {
-                    name: "initializerAccount";
-                    isMut: true;
-                    isSigner: true;
-                },
-                {
-                    name: "fractionsMint";
-                    isMut: true;
-                    isSigner: false;
-                },
-                {
-                    name: "redeemerFractionsAccount";
-                    isMut: true;
-                    isSigner: false;
-                },
-                {
-                    name: "vaultAccount";
-                    isMut: true;
-                    isSigner: false;
-                },
-                {
-                    name: "nftMetadataAccount";
-                    isMut: false;
-                    isSigner: false;
-                },
-                {
-                    name: "tokenProgram";
-                    isMut: false;
-                    isSigner: false;
-                },
-                {
-                    name: "systemProgram";
-                    isMut: false;
-                    isSigner: false;
-                }
-            ];
-            args: [
-                {
-                    name: "amount";
-                    type: "u64";
-                }
-            ];
         },
         {
             name: "claimAssets";
@@ -621,32 +628,6 @@ export type Vault = {
                     type: "string";
                 }
             ];
-        },
-        {
-            name: "transferAta";
-            accounts: [
-                {
-                    name: "initializerAccount";
-                    isMut: true;
-                    isSigner: true;
-                },
-                {
-                    name: "userNftAccount";
-                    isMut: true;
-                    isSigner: false;
-                },
-                {
-                    name: "vaultAccount";
-                    isMut: true;
-                    isSigner: false;
-                },
-                {
-                    name: "tokenProgram";
-                    isMut: false;
-                    isSigner: false;
-                }
-            ];
-            args: [];
         },
         {
             name: "initializeFractionalPool";
@@ -893,16 +874,6 @@ export type Vault = {
                     isSigner: false;
                 },
                 {
-                    name: "solFeeAccount";
-                    isMut: true;
-                    isSigner: false;
-                },
-                {
-                    name: "pnftFeeAccount";
-                    isMut: true;
-                    isSigner: false;
-                },
-                {
                     name: "vaultAccount";
                     isMut: false;
                     isSigner: false;
@@ -913,17 +884,17 @@ export type Vault = {
                     isSigner: false;
                 },
                 {
-                    name: "feeAccount";
-                    isMut: true;
-                    isSigner: false;
-                },
-                {
                     name: "tokenProgram";
                     isMut: false;
                     isSigner: false;
                 },
                 {
-                    name: "clock";
+                    name: "systemProgram";
+                    isMut: false;
+                    isSigner: false;
+                },
+                {
+                    name: "associatedTokenProgram";
                     isMut: false;
                     isSigner: false;
                 }
@@ -1040,16 +1011,6 @@ export type Vault = {
                     isSigner: false;
                 },
                 {
-                    name: "solFeeAccount";
-                    isMut: true;
-                    isSigner: false;
-                },
-                {
-                    name: "pnftFeeAccount";
-                    isMut: true;
-                    isSigner: false;
-                },
-                {
                     name: "programFnftAccount";
                     isMut: true;
                     isSigner: false;
@@ -1080,17 +1041,7 @@ export type Vault = {
                     isSigner: false;
                 },
                 {
-                    name: "feeAccount";
-                    isMut: true;
-                    isSigner: false;
-                },
-                {
                     name: "tokenProgram";
-                    isMut: false;
-                    isSigner: false;
-                },
-                {
-                    name: "clock";
                     isMut: false;
                     isSigner: false;
                 }
@@ -1172,193 +1123,6 @@ export type Vault = {
                     type: "u64";
                 }
             ];
-        },
-        {
-            name: "exchangeFractionalPool";
-            accounts: [
-                {
-                    name: "initializerAccount";
-                    isMut: true;
-                    isSigner: true;
-                },
-                {
-                    name: "inMint";
-                    isMut: true;
-                    isSigner: false;
-                },
-                {
-                    name: "initializerInAccount";
-                    isMut: true;
-                    isSigner: false;
-                },
-                {
-                    name: "inVault";
-                    isMut: false;
-                    isSigner: false;
-                },
-                {
-                    name: "programInAccount";
-                    isMut: true;
-                    isSigner: false;
-                },
-                {
-                    name: "outMint";
-                    isMut: true;
-                    isSigner: false;
-                },
-                {
-                    name: "initializerOutAccount";
-                    isMut: true;
-                    isSigner: false;
-                },
-                {
-                    name: "programOutAccount";
-                    isMut: true;
-                    isSigner: false;
-                },
-                {
-                    name: "outVault";
-                    isMut: false;
-                    isSigner: false;
-                },
-                {
-                    name: "pnftMint";
-                    isMut: true;
-                    isSigner: false;
-                },
-                {
-                    name: "initializerPnftAccount";
-                    isMut: true;
-                    isSigner: false;
-                },
-                {
-                    name: "solFeeAccount";
-                    isMut: true;
-                    isSigner: false;
-                },
-                {
-                    name: "pnftFeeAccount";
-                    isMut: true;
-                    isSigner: false;
-                },
-                {
-                    name: "poolAccount";
-                    isMut: true;
-                    isSigner: false;
-                },
-                {
-                    name: "inAppraisal";
-                    isMut: true;
-                    isSigner: false;
-                },
-                {
-                    name: "outAppraisal";
-                    isMut: true;
-                    isSigner: false;
-                },
-                {
-                    name: "feeAccount";
-                    isMut: true;
-                    isSigner: false;
-                },
-                {
-                    name: "tokenProgram";
-                    isMut: false;
-                    isSigner: false;
-                },
-                {
-                    name: "clock";
-                    isMut: false;
-                    isSigner: false;
-                }
-            ];
-            args: [];
-        },
-        {
-            name: "newExchangeFractionalPool";
-            accounts: [
-                {
-                    name: "initializerAccount";
-                    isMut: true;
-                    isSigner: true;
-                },
-                {
-                    name: "inMint";
-                    isMut: true;
-                    isSigner: false;
-                },
-                {
-                    name: "initializerInAccount";
-                    isMut: true;
-                    isSigner: false;
-                },
-                {
-                    name: "inVault";
-                    isMut: false;
-                    isSigner: false;
-                },
-                {
-                    name: "programInAccount";
-                    isMut: true;
-                    isSigner: false;
-                },
-                {
-                    name: "outMint";
-                    isMut: true;
-                    isSigner: false;
-                },
-                {
-                    name: "initializerOutAccount";
-                    isMut: true;
-                    isSigner: false;
-                },
-                {
-                    name: "programOutAccount";
-                    isMut: true;
-                    isSigner: false;
-                },
-                {
-                    name: "outVault";
-                    isMut: false;
-                    isSigner: false;
-                },
-                {
-                    name: "pnftMint";
-                    isMut: true;
-                    isSigner: false;
-                },
-                {
-                    name: "initializerPnftAccount";
-                    isMut: true;
-                    isSigner: false;
-                },
-                {
-                    name: "poolAccount";
-                    isMut: true;
-                    isSigner: false;
-                },
-                {
-                    name: "inAppraisal";
-                    isMut: true;
-                    isSigner: false;
-                },
-                {
-                    name: "outAppraisal";
-                    isMut: true;
-                    isSigner: false;
-                },
-                {
-                    name: "tokenProgram";
-                    isMut: false;
-                    isSigner: false;
-                },
-                {
-                    name: "clock";
-                    isMut: false;
-                    isSigner: false;
-                }
-            ];
-            args: [];
         },
         {
             name: "initSingleAssetRental";
@@ -2338,6 +2102,177 @@ export const IDL: Vault = {
             ]
         },
         {
+            name: "fractionalizePnft",
+            accounts: [
+                {
+                    name: "payerAccount",
+                    isMut: true,
+                    isSigner: true
+                },
+                {
+                    name: "initializerAccount",
+                    isMut: true,
+                    isSigner: true
+                },
+                {
+                    name: "fractionsMint",
+                    isMut: true,
+                    isSigner: false
+                },
+                {
+                    name: "fractionsTokenAccount",
+                    isMut: true,
+                    isSigner: false
+                },
+                {
+                    name: "nftMint",
+                    isMut: true,
+                    isSigner: false
+                },
+                {
+                    name: "initializerNftAccount",
+                    isMut: true,
+                    isSigner: false
+                },
+                {
+                    name: "programNftAccount",
+                    isMut: true,
+                    isSigner: false
+                },
+                {
+                    name: "vaultAccount",
+                    isMut: true,
+                    isSigner: false
+                },
+                {
+                    name: "nftMetadata",
+                    isMut: true,
+                    isSigner: false
+                },
+                {
+                    name: "nftEdition",
+                    isMut: true,
+                    isSigner: false
+                },
+                {
+                    name: "associatedTokenProgram",
+                    isMut: false,
+                    isSigner: false
+                },
+                {
+                    name: "tokenProgram",
+                    isMut: false,
+                    isSigner: false
+                },
+                {
+                    name: "systemProgram",
+                    isMut: false,
+                    isSigner: false
+                },
+                {
+                    name: "mplTokenMetadata",
+                    isMut: false,
+                    isSigner: false
+                },
+                {
+                    name: "rent",
+                    isMut: false,
+                    isSigner: false
+                },
+                {
+                    name: "instructionsProgram",
+                    isMut: false,
+                    isSigner: false
+                }
+            ],
+            args: [
+                {
+                    name: "nonce",
+                    type: "publicKey"
+                },
+                {
+                    name: "numShares",
+                    type: "u64"
+                }
+            ]
+        },
+        {
+            name: "transferPnft",
+            accounts: [
+                {
+                    name: "payerAccount",
+                    isMut: true,
+                    isSigner: true
+                },
+                {
+                    name: "initializerAccount",
+                    isMut: true,
+                    isSigner: true
+                },
+                {
+                    name: "nftMint",
+                    isMut: true,
+                    isSigner: false
+                },
+                {
+                    name: "initializerNftAccount",
+                    isMut: true,
+                    isSigner: false
+                },
+                {
+                    name: "programNftAccount",
+                    isMut: true,
+                    isSigner: false
+                },
+                {
+                    name: "poolAccount",
+                    isMut: false,
+                    isSigner: false
+                },
+                {
+                    name: "nftMetadata",
+                    isMut: true,
+                    isSigner: false
+                },
+                {
+                    name: "nftEdition",
+                    isMut: true,
+                    isSigner: false
+                },
+                {
+                    name: "associatedTokenProgram",
+                    isMut: false,
+                    isSigner: false
+                },
+                {
+                    name: "tokenProgram",
+                    isMut: false,
+                    isSigner: false
+                },
+                {
+                    name: "systemProgram",
+                    isMut: false,
+                    isSigner: false
+                },
+                {
+                    name: "mplTokenMetadata",
+                    isMut: false,
+                    isSigner: false
+                },
+                {
+                    name: "rent",
+                    isMut: false,
+                    isSigner: false
+                },
+                {
+                    name: "instructionsProgram",
+                    isMut: false,
+                    isSigner: false
+                }
+            ],
+            args: []
+        },
+        {
             name: "createTokenMetadataSingleAsset",
             accounts: [
                 {
@@ -2477,7 +2412,7 @@ export const IDL: Vault = {
             args: []
         },
         {
-            name: "startAuction",
+            name: "fusePnft",
             accounts: [
                 {
                     name: "initializerAccount",
@@ -2490,12 +2425,22 @@ export const IDL: Vault = {
                     isSigner: false
                 },
                 {
-                    name: "initializerTokenAccount",
+                    name: "nftMint",
                     isMut: true,
                     isSigner: false
                 },
                 {
-                    name: "programTokenAccount",
+                    name: "fractionsTokenAccount",
+                    isMut: true,
+                    isSigner: false
+                },
+                {
+                    name: "lockedNftAccount",
+                    isMut: true,
+                    isSigner: false
+                },
+                {
+                    name: "userNftAccount",
                     isMut: true,
                     isSigner: false
                 },
@@ -2505,7 +2450,22 @@ export const IDL: Vault = {
                     isSigner: false
                 },
                 {
+                    name: "nftMetadata",
+                    isMut: true,
+                    isSigner: false
+                },
+                {
+                    name: "nftEdition",
+                    isMut: true,
+                    isSigner: false
+                },
+                {
                     name: "tokenProgram",
+                    isMut: false,
+                    isSigner: false
+                },
+                {
+                    name: "associatedTokenProgram",
                     isMut: false,
                     isSigner: false
                 },
@@ -2515,206 +2475,17 @@ export const IDL: Vault = {
                     isSigner: false
                 },
                 {
-                    name: "clock",
-                    isMut: false,
-                    isSigner: false
-                }
-            ],
-            args: [
-                {
-                    name: "bidInSol",
-                    type: "u64"
-                },
-                {
-                    name: "bidInFnfts",
-                    type: "u64"
-                },
-                {
-                    name: "minBid",
-                    type: "u64"
-                }
-            ]
-        },
-        {
-            name: "placeBid",
-            accounts: [
-                {
-                    name: "bidderAccount",
-                    isMut: true,
-                    isSigner: true
-                },
-                {
-                    name: "previousBidderAccount",
-                    isMut: true,
-                    isSigner: false
-                },
-                {
-                    name: "previousBidderTokenAccount",
-                    isMut: true,
-                    isSigner: false
-                },
-                {
-                    name: "fractionsMint",
-                    isMut: true,
-                    isSigner: false
-                },
-                {
-                    name: "bidderTokenAccount",
-                    isMut: true,
-                    isSigner: false
-                },
-                {
-                    name: "programTokenAccount",
-                    isMut: true,
-                    isSigner: false
-                },
-                {
-                    name: "vaultAccount",
-                    isMut: true,
-                    isSigner: false
-                },
-                {
-                    name: "systemProgram",
+                    name: "instructionsProgram",
                     isMut: false,
                     isSigner: false
                 },
                 {
-                    name: "tokenProgram",
-                    isMut: false,
-                    isSigner: false
-                },
-                {
-                    name: "clock",
-                    isMut: false,
-                    isSigner: false
-                }
-            ],
-            args: [
-                {
-                    name: "totalSol",
-                    type: "u64"
-                },
-                {
-                    name: "bidInSol",
-                    type: "u64"
-                },
-                {
-                    name: "bidInFnfts",
-                    type: "u64"
-                }
-            ]
-        },
-        {
-            name: "endAuction",
-            accounts: [
-                {
-                    name: "initializerAccount",
-                    isMut: true,
-                    isSigner: true
-                },
-                {
-                    name: "treasuryAccount",
-                    isMut: true,
-                    isSigner: false
-                },
-                {
-                    name: "winningBidderAccount",
-                    isMut: true,
-                    isSigner: false
-                },
-                {
-                    name: "winningBidderTokenAccount",
-                    isMut: true,
-                    isSigner: false
-                },
-                {
-                    name: "fractionsMint",
-                    isMut: true,
-                    isSigner: false
-                },
-                {
-                    name: "programTokenAccount",
-                    isMut: true,
-                    isSigner: false
-                },
-                {
-                    name: "vaultAccount",
-                    isMut: true,
-                    isSigner: false
-                },
-                {
-                    name: "vaultNftAccount",
-                    isMut: true,
-                    isSigner: false
-                },
-                {
-                    name: "winnerNftAccount",
-                    isMut: true,
-                    isSigner: false
-                },
-                {
-                    name: "nftMetadataAccount",
-                    isMut: false,
-                    isSigner: false
-                },
-                {
-                    name: "tokenProgram",
-                    isMut: false,
-                    isSigner: false
-                },
-                {
-                    name: "clock",
+                    name: "mplTokenMetadata",
                     isMut: false,
                     isSigner: false
                 }
             ],
             args: []
-        },
-        {
-            name: "redeem",
-            accounts: [
-                {
-                    name: "initializerAccount",
-                    isMut: true,
-                    isSigner: true
-                },
-                {
-                    name: "fractionsMint",
-                    isMut: true,
-                    isSigner: false
-                },
-                {
-                    name: "redeemerFractionsAccount",
-                    isMut: true,
-                    isSigner: false
-                },
-                {
-                    name: "vaultAccount",
-                    isMut: true,
-                    isSigner: false
-                },
-                {
-                    name: "nftMetadataAccount",
-                    isMut: false,
-                    isSigner: false
-                },
-                {
-                    name: "tokenProgram",
-                    isMut: false,
-                    isSigner: false
-                },
-                {
-                    name: "systemProgram",
-                    isMut: false,
-                    isSigner: false
-                }
-            ],
-            args: [
-                {
-                    name: "amount",
-                    type: "u64"
-                }
-            ]
         },
         {
             name: "claimAssets",
@@ -2854,32 +2625,6 @@ export const IDL: Vault = {
                     type: "string"
                 }
             ]
-        },
-        {
-            name: "transferAta",
-            accounts: [
-                {
-                    name: "initializerAccount",
-                    isMut: true,
-                    isSigner: true
-                },
-                {
-                    name: "userNftAccount",
-                    isMut: true,
-                    isSigner: false
-                },
-                {
-                    name: "vaultAccount",
-                    isMut: true,
-                    isSigner: false
-                },
-                {
-                    name: "tokenProgram",
-                    isMut: false,
-                    isSigner: false
-                }
-            ],
-            args: []
         },
         {
             name: "initializeFractionalPool",
@@ -3126,16 +2871,6 @@ export const IDL: Vault = {
                     isSigner: false
                 },
                 {
-                    name: "solFeeAccount",
-                    isMut: true,
-                    isSigner: false
-                },
-                {
-                    name: "pnftFeeAccount",
-                    isMut: true,
-                    isSigner: false
-                },
-                {
                     name: "vaultAccount",
                     isMut: false,
                     isSigner: false
@@ -3146,17 +2881,17 @@ export const IDL: Vault = {
                     isSigner: false
                 },
                 {
-                    name: "feeAccount",
-                    isMut: true,
-                    isSigner: false
-                },
-                {
                     name: "tokenProgram",
                     isMut: false,
                     isSigner: false
                 },
                 {
-                    name: "clock",
+                    name: "systemProgram",
+                    isMut: false,
+                    isSigner: false
+                },
+                {
+                    name: "associatedTokenProgram",
                     isMut: false,
                     isSigner: false
                 }
@@ -3273,16 +3008,6 @@ export const IDL: Vault = {
                     isSigner: false
                 },
                 {
-                    name: "solFeeAccount",
-                    isMut: true,
-                    isSigner: false
-                },
-                {
-                    name: "pnftFeeAccount",
-                    isMut: true,
-                    isSigner: false
-                },
-                {
                     name: "programFnftAccount",
                     isMut: true,
                     isSigner: false
@@ -3313,17 +3038,7 @@ export const IDL: Vault = {
                     isSigner: false
                 },
                 {
-                    name: "feeAccount",
-                    isMut: true,
-                    isSigner: false
-                },
-                {
                     name: "tokenProgram",
-                    isMut: false,
-                    isSigner: false
-                },
-                {
-                    name: "clock",
                     isMut: false,
                     isSigner: false
                 }
@@ -3405,193 +3120,6 @@ export const IDL: Vault = {
                     type: "u64"
                 }
             ]
-        },
-        {
-            name: "exchangeFractionalPool",
-            accounts: [
-                {
-                    name: "initializerAccount",
-                    isMut: true,
-                    isSigner: true
-                },
-                {
-                    name: "inMint",
-                    isMut: true,
-                    isSigner: false
-                },
-                {
-                    name: "initializerInAccount",
-                    isMut: true,
-                    isSigner: false
-                },
-                {
-                    name: "inVault",
-                    isMut: false,
-                    isSigner: false
-                },
-                {
-                    name: "programInAccount",
-                    isMut: true,
-                    isSigner: false
-                },
-                {
-                    name: "outMint",
-                    isMut: true,
-                    isSigner: false
-                },
-                {
-                    name: "initializerOutAccount",
-                    isMut: true,
-                    isSigner: false
-                },
-                {
-                    name: "programOutAccount",
-                    isMut: true,
-                    isSigner: false
-                },
-                {
-                    name: "outVault",
-                    isMut: false,
-                    isSigner: false
-                },
-                {
-                    name: "pnftMint",
-                    isMut: true,
-                    isSigner: false
-                },
-                {
-                    name: "initializerPnftAccount",
-                    isMut: true,
-                    isSigner: false
-                },
-                {
-                    name: "solFeeAccount",
-                    isMut: true,
-                    isSigner: false
-                },
-                {
-                    name: "pnftFeeAccount",
-                    isMut: true,
-                    isSigner: false
-                },
-                {
-                    name: "poolAccount",
-                    isMut: true,
-                    isSigner: false
-                },
-                {
-                    name: "inAppraisal",
-                    isMut: true,
-                    isSigner: false
-                },
-                {
-                    name: "outAppraisal",
-                    isMut: true,
-                    isSigner: false
-                },
-                {
-                    name: "feeAccount",
-                    isMut: true,
-                    isSigner: false
-                },
-                {
-                    name: "tokenProgram",
-                    isMut: false,
-                    isSigner: false
-                },
-                {
-                    name: "clock",
-                    isMut: false,
-                    isSigner: false
-                }
-            ],
-            args: []
-        },
-        {
-            name: "newExchangeFractionalPool",
-            accounts: [
-                {
-                    name: "initializerAccount",
-                    isMut: true,
-                    isSigner: true
-                },
-                {
-                    name: "inMint",
-                    isMut: true,
-                    isSigner: false
-                },
-                {
-                    name: "initializerInAccount",
-                    isMut: true,
-                    isSigner: false
-                },
-                {
-                    name: "inVault",
-                    isMut: false,
-                    isSigner: false
-                },
-                {
-                    name: "programInAccount",
-                    isMut: true,
-                    isSigner: false
-                },
-                {
-                    name: "outMint",
-                    isMut: true,
-                    isSigner: false
-                },
-                {
-                    name: "initializerOutAccount",
-                    isMut: true,
-                    isSigner: false
-                },
-                {
-                    name: "programOutAccount",
-                    isMut: true,
-                    isSigner: false
-                },
-                {
-                    name: "outVault",
-                    isMut: false,
-                    isSigner: false
-                },
-                {
-                    name: "pnftMint",
-                    isMut: true,
-                    isSigner: false
-                },
-                {
-                    name: "initializerPnftAccount",
-                    isMut: true,
-                    isSigner: false
-                },
-                {
-                    name: "poolAccount",
-                    isMut: true,
-                    isSigner: false
-                },
-                {
-                    name: "inAppraisal",
-                    isMut: true,
-                    isSigner: false
-                },
-                {
-                    name: "outAppraisal",
-                    isMut: true,
-                    isSigner: false
-                },
-                {
-                    name: "tokenProgram",
-                    isMut: false,
-                    isSigner: false
-                },
-                {
-                    name: "clock",
-                    isMut: false,
-                    isSigner: false
-                }
-            ],
-            args: []
         },
         {
             name: "initSingleAssetRental",

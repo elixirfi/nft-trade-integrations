@@ -19,6 +19,14 @@ export interface TransactionResult {
     status: boolean;
 }
 
+export enum TokenStandard {
+    NonFungible = "NonFungible",
+    FungibleAsset = "FungibleAsset",
+    Fungible = "Fungible",
+    NonFungibleEdition = "NonFungibleEdition",
+    ProgrammableNonFungible = "ProgrammableNonFungible"
+}
+
 export interface Creator {
     address: string;
     verified: boolean;
@@ -63,7 +71,62 @@ export interface NftMetadata {
     data: NftData;
     primary_sale_happened: boolean;
     is_mutable: boolean;
+    token_standard: TokenStandard;
     extra_metadata: ExtraMetadata;
-    pools: Array<string>;
+    programmable_config?: string;
+    pools?: Array<string>;
 }
 
+export enum PriorityFee {
+    NONE = 0,
+    BASE_LINE = 500_000,
+    HIGH = 1_000_000
+}
+
+export interface WhirlpoolElixirData {
+    whirlpool: string;
+    tokenVaultA: string;
+    tokenVaultB: string;
+    tickArray0: string;
+    tickArray1: string;
+    tickArray2: string;
+    oracle: string;
+}
+
+
+export interface Price {
+    price: number | null;
+    cumulativePrice: number | null;
+    observationId?: string;
+    ticks?: string[];
+}
+
+export interface OrcaPoolInfo {
+    mint: string;
+    collectionId: string;
+    whirlpool: string;
+    oracle: string;
+    tokenVaultA: string;
+    tokenVaultB: string;
+    tokenPrice: number;
+    buys: Price[];
+    sells: Price[];
+}
+
+export interface RaydiumPoolInfo {
+    mint: string;
+    collectionId: string;
+    tokenPrice: number;
+    buys: Price[];
+    sells: Price[];
+}
+
+export interface PoolInfoV2 {
+    mint: string;
+    collectionId: string;
+    fee: number;
+    royalty: number;
+    tokenPrice: number;
+    raydium: RaydiumPoolInfo | null;
+    orca: OrcaPoolInfo | null;
+}

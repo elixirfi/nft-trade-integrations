@@ -8,6 +8,15 @@ const FULFILLMENT_KEYS = {
 };
 export const METADATA_PREFIX = "metadata";
 
+export const TOTAL_RAYDIUM_FEE = 0.005;
+export const TOTAL_ORCA_FEE = 0.01;
+
+export const SELL_TXN_FEES = 0.01368336;
+export const BUY_TXN_FEES = 0.00203928;
+
+export const V0_PRIORITY_FEE = 500_000;
+export const V0_COMPUTE_INCREASE = 600_000;
+
 export const defaultVerifierAuthorityId = new PublicKey("AcAJFFQLZ6zgpropNYU4cwnVjz2numBkPoMYWGYSeyFx");
 
 const vaultProgramId = new PublicKey("2qGyiNeWyZxNdkvWHc2jT5qkCnYa1j1gDLSSUmyoWMh8");
@@ -57,39 +66,41 @@ const MEMO_ID = new PublicKey("MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr");
 const APPRAISER = new PublicKey("3RDTwtVmMcH9zvzqj8mZi9GH8apqWpRZyXB9DWL7QqrP");
 const COMPOSE_PID = new PublicKey("E1XRkj9fPF2NQUdoq41AHPqwMDHykYfn5PzBXAyDs7Be");
 const PROGRAMS_LOOKUP_TABLE = new PublicKey("FDU3PjpftvmM1g6d8ocF8dXzdYrB5zoCbs5Kv9PSJAgo");
+const WHIRLPOOL = new PublicKey("whirLbMiicVdio4qvUfM5KAg6Ct8VwpYzGff3uctyCc");
 
 export const SOL_SWITCHBOARD_KEYS = {
     devnet: new PublicKey("AdtRGGhmqvom3Jemp5YNrxd9q9unX36BZk1pujkkXijL"),
     mainnet: new PublicKey("AdtRGGhmqvom3Jemp5YNrxd9q9unX36BZk1pujkkXijL")
 };
 
-export const BRIDGESPLIT_API = "https://backend.bridgesplit.com/";
+export const BRIDGESPLIT_API = "https://api.bridgesplit.com/";
+export const BRIDGESPLIT_WEB3 = "https://backend.bridgesplit.com/";
+
+export const PRICES_V2 = BRIDGESPLIT_API + "v2/prices";
 
 export const PROGRAM_IDS = {
-          token: TOKEN_PROGRAM_ID,
-          associatedToken: ASSOCIATED_TOKEN_PROGRAM_ID,
-          system: SystemProgram.programId,
-          rent: SYSVAR_RENT_PUBKEY,
-          fulfillment: FULFILLMENT_KEYS.mainnet,
-          vault: vaultProgramId,
-          augur: augurProgramId,
-          multi_asset: multiAssetPoolProgramId,
-          augur_authority: augurAuthorityId,
-          metadata: METADATA_PROGRAM_ID,
-          treasury: TREASURY_ACCOUNTS.mainnet,
-          dex: DEX_PROGRAMS.mainnet,
-          amm: AMM_PROGRAMS.mainnet,
-          sol_oracle: SOL_SWITCHBOARD_KEYS.mainnet,
-          wrapped_sol: WRAPPED_SOL_MINT,
-          sol: NATIVE_MINT.toString(),
-          swap: SWAP_PROGRAMS.mainnet,
-          memo: MEMO_ID,
-          rental: rentalProgramId,
-          rental_auxilary: rentalsAuxilaryProgramId,
-          lottery: lotteryProgramId,
-          parliament: parliamentProgramId,
-          appraiser: APPRAISER,
-          fee: FEE_PID,
-          compose: COMPOSE_PID,
-          lookups: PROGRAMS_LOOKUP_TABLE
-      };
+    token: TOKEN_PROGRAM_ID,
+    associatedToken: ASSOCIATED_TOKEN_PROGRAM_ID,
+    system: SystemProgram.programId,
+    rent: SYSVAR_RENT_PUBKEY,
+    fulfillment: FULFILLMENT_KEYS.mainnet,
+    vault: vaultProgramId,
+    augur: augurProgramId,
+    multi_asset: multiAssetPoolProgramId,
+    augur_authority: augurAuthorityId,
+    metadata: METADATA_PROGRAM_ID,
+    treasury: TREASURY_ACCOUNTS.mainnet,
+    dex: DEX_PROGRAMS.mainnet,
+    amm: AMM_PROGRAMS.mainnet,
+    whirlpool: WHIRLPOOL,
+    sol_oracle: SOL_SWITCHBOARD_KEYS.mainnet,
+    wrapped_sol: WRAPPED_SOL_MINT,
+    sol: NATIVE_MINT.toString(),
+    swap: SWAP_PROGRAMS.mainnet,
+    memo: MEMO_ID,
+    rental: rentalProgramId,
+    rental_auxilary: rentalsAuxilaryProgramId,
+    lottery: lotteryProgramId,
+    parliament: parliamentProgramId,
+    appraiser: APPRAISER
+};

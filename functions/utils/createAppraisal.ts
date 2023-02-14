@@ -1,6 +1,6 @@
 import { PublicKey, SYSVAR_CLOCK_PUBKEY, SystemProgram, Transaction } from "@solana/web3.js";
-import { AnchorState, BRIDGESPLIT_API, May } from "../utils";
-import { Vault } from "../program";
+import { AnchorState, BRIDGESPLIT_API, May } from "../../utils";
+import { Vault } from "../../program";
 
 // anchorState -- See type
 // nftMint -- Mint of the NFT you're buying
