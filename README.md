@@ -3,9 +3,12 @@
 ## Overall 
 
 ### Token lists + Details
-All Collections - backend.bridgesplit.com/collections
+All Collections - backend.bridgesplit.com/collection
+
 Token Mappings - backend.bridgesplit.com/bs_token_list
+
 Look up tables - backend.bridgesplit.com/token/lookup_table/:pool_mint:
+
 
 ## AMM
 ### Pool Pricing
